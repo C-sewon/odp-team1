@@ -100,6 +100,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         bluetoothLeScanner = bleAdapter.getBluetoothLeScanner();
+        if (bluetoothLeScanner == null) {
+            addLog("BLE 스캐너를 가져올 수 없습니다.");
+            return;
+        }
+
         ScanSettings scanSettings = new ScanSettings.Builder()
                 .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
                 .build();
@@ -107,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
         bluetoothLeScanner.startScan(null, scanSettings, scanCallback);
         addLog("스캔 시작");
     }
-
     private void stopBleScan() {
         if (bluetoothLeScanner != null && hasScanPermission()) {
             bluetoothLeScanner.stopScan(scanCallback);
